@@ -34,6 +34,13 @@ public class CourseRepository {
                 .price(80.00)
                 .status(false)
                 .build());
+        courses.add(Course.builder()
+                .id(UUID.randomUUID().toString())
+                .code("ISTAD-003")
+                .title("ReactJS")
+                .price(85.00)
+                .status(false)
+                .build());
     }
 
 }

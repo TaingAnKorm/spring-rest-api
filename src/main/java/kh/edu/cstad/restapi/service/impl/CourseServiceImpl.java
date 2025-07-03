@@ -21,8 +21,7 @@ public class CourseServiceImpl implements CourseService {
     public List<CourseResponse> getCourses(Boolean status) {
 
         // Filter
-        List<Course> filteredCourse = courseRepository.getCourses()
-                .stream()
+        List<Course> filteredCourse = courseRepository.getCourses().stream()
                 .filter(course -> course.getStatus().equals(status))
                 .toList();
 
@@ -30,6 +29,7 @@ public class CourseServiceImpl implements CourseService {
         List<CourseResponse> courseResponsesList = filteredCourse
                 .stream()
                 .map(course -> CourseResponse.builder()
+                        .id(course.getId())
                         .code(course.getCode())
                         .title(course.getTitle())
                         .price(course.getPrice())
@@ -38,5 +38,74 @@ public class CourseServiceImpl implements CourseService {
                 .toList();
 
         return courseResponsesList;
+    }
+
+    @Override
+    public List<CourseResponse> getCourses(Boolean status, String title) {
+
+        List<Course> filteredCourse = courseRepository.getCourses().stream()
+                .filter(course -> course.getStatus().equals(status))
+                .toList();
+
+        if (title != null) {
+            filteredCourse = filteredCourse.stream()
+                    .filter(course -> course.getTitle().toLowerCase().contains(title.toLowerCase()))
+                    .toList();
+        }
+
+        List<CourseResponse> courseResponsesList = filteredCourse
+                .stream()
+                .map(course -> CourseResponse.builder()
+                        .id(course.getId())
+                        .code(course.getCode())
+                        .title(course.getTitle())
+                        .price(course.getPrice())
+                        .status(course.getStatus())
+                        .build())
+                .toList();
+
+        return courseResponsesList;
+    }
+
+    @Override
+    public CourseResponse getCourseByCode(String code) {
+
+        Course foundCourse = courseRepository.getCourses().stream()
+                .filter(course -> course.getCode().equalsIgnoreCase(code))
+                .findFirst()
+                .orElse(null);
+
+        if (foundCourse == null) {
+            return null;
+        }
+
+        return CourseResponse.builder()
+                .id(foundCourse.getId())
+                .code(foundCourse.getCode())
+                .title(foundCourse.getTitle())
+                .price(foundCourse.getPrice())
+                .status(foundCourse.getStatus())
+                .build();
+    }
+
+    @Override
+    public CourseResponse getCourseById(String id) {
+
+        Course foundCourse = courseRepository.getCourses().stream()
+                .filter(course -> course.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+
+        if (foundCourse == null) {
+            return null;
+        }
+
+        return CourseResponse.builder()
+                .id(foundCourse.getId())
+                .code(foundCourse.getCode())
+                .title(foundCourse.getTitle())
+                .price(foundCourse.getPrice())
+                .status(foundCourse.getStatus())
+                .build();
     }
 }

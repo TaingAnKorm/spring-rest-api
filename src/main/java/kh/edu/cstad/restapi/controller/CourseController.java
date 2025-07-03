@@ -1,22 +1,15 @@
 package kh.edu.cstad.restapi.controller;
 
 
-import kh.edu.cstad.restapi.domain.Course;
 import kh.edu.cstad.restapi.dto.CourseResponse;
 import kh.edu.cstad.restapi.service.CourseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
-//@Controller +@ResponseBody
+//@Controller + @ResponseBody
 @RequestMapping("/api/v1/courses")
 @RequiredArgsConstructor
 public class CourseController {
@@ -26,7 +19,18 @@ public class CourseController {
 
     //ទាញព័ត៍មានវគ្គសិក្សាទាំងអស់
     @GetMapping
-    public List<CourseResponse> getCourses(@RequestParam(required = false, defaultValue = "true") Boolean status) {
-        return courseService.getCourses(status);
+    public List<CourseResponse> getCourses(@RequestParam(required = false, defaultValue = "true") Boolean status,
+                                           @RequestParam(required = false) String title) {
+        return courseService.getCourses(status, title);
+    }
+
+    @GetMapping("/code/{code}")
+    public CourseResponse getCourseByCode(@PathVariable String code){
+        return courseService.getCourseByCode(code);
+    }
+
+    @GetMapping("/{id}")
+    public CourseResponse getCourseById(@PathVariable String id){
+        return courseService.getCourseById(id);
     }
 }
