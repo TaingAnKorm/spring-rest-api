@@ -29,7 +29,6 @@ public class CourseServiceImpl implements CourseService {
         List<CourseResponse> courseResponsesList = filteredCourse
                 .stream()
                 .map(course -> CourseResponse.builder()
-                        .id(course.getId())
                         .code(course.getCode())
                         .title(course.getTitle())
                         .price(course.getPrice())
@@ -56,7 +55,6 @@ public class CourseServiceImpl implements CourseService {
         List<CourseResponse> courseResponsesList = filteredCourse
                 .stream()
                 .map(course -> CourseResponse.builder()
-                        .id(course.getId())
                         .code(course.getCode())
                         .title(course.getTitle())
                         .price(course.getPrice())
@@ -80,7 +78,6 @@ public class CourseServiceImpl implements CourseService {
         }
 
         return CourseResponse.builder()
-                .id(foundCourse.getId())
                 .code(foundCourse.getCode())
                 .title(foundCourse.getTitle())
                 .price(foundCourse.getPrice())
@@ -101,7 +98,6 @@ public class CourseServiceImpl implements CourseService {
         }
 
         return CourseResponse.builder()
-                .id(foundCourse.getId())
                 .code(foundCourse.getCode())
                 .title(foundCourse.getTitle())
                 .price(foundCourse.getPrice())
